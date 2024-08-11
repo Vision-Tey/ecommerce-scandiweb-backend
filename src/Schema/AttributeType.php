@@ -17,7 +17,6 @@ class AttributeType extends ObjectType
                 'type' => ['type' => Type::string()],
                 'items' => [
                     'type' => Type::listOf(new ObjectType([
-                        'name' => 'AttributeItem',
                         'fields' => [
                             'displayValue' => ['type' => Type::string()],
                             'value' => ['type' => Type::string()],

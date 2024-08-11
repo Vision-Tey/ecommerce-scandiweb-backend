@@ -9,13 +9,14 @@ use PDOStatement;
 
 class Database
 {
-    protected PDO $pdo;
-    protected PDOStatement $statement;
-    private static ?self $instance = null;
+    protected PDO $pdo;  // PDO instance for database connection
+    protected PDOStatement $statement;  // PDO statement for prepared queries
+    private static ?self $instance = null;  // Singleton instance of Database
+
 
     public function __construct($config, $user, $pass)
     {
-        $dsn = 'mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']['dbname'] . ';charset=utf8';
+        $dsn = 'mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']['dbname'] . ';port=' . $config['db']['port'] .';charset=utf8';
         $this->pdo = new PDO($dsn, $user, $pass, [
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
@@ -56,7 +57,7 @@ class Database
     {
         $this->statement = $this->pdo->prepare($query);
         if (!is_array($params)) {
-            $params = []; // Ensure $params is always an array
+            $params = []; 
         }
         $this->statement->execute($params);
         return $this->statement;

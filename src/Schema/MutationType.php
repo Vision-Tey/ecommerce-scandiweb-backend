@@ -19,7 +19,7 @@ class MutationType extends ObjectType
                 'product_id' => Type::nonNull(Type::string()),
                 'quantity' => Type::nonNull(Type::int()),
                 'total_price' => Type::nonNull(Type::float()),
-                'attributes' => Type::nonNull(Type::string()) // Adjust type based on your actual attributes structure
+                'attributes' => Type::nonNull(Type::string())
             ]
         ]);
 
@@ -27,7 +27,7 @@ class MutationType extends ObjectType
             'name' => 'Mutation',
             'fields' => [
                 'createOrder' => [
-                    'type' => Type::nonNull(Type::int()), // Return the ID of the new order
+                    'type' => Type::nonNull(Type::int()),
                     'description' => 'Create a new order',
                     'args' => [
                         'customer_name' => Type::nonNull(Type::string()),

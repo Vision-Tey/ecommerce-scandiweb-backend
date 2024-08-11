@@ -42,7 +42,7 @@ class QueryType extends ObjectType
 
                                 // Decode JSON fields if they are not null
                                 $product['gallery'] = $this->decodeJson($product['gallery']);
-                                $product['attributes'] = $this->decodeJson($product['attributes']);
+                                $product['attributes'] = $this->decodeAttributes($product['attributes']);
                                 $product['prices'] = $this->decodeJson($product['prices']);
                             }
                             return $products;
@@ -102,4 +102,18 @@ class QueryType extends ObjectType
     {
         return $json ? json_decode($json, true) : [];
     }
+
+    private function decodeAttributes($attributesJson)
+    {
+        if (!$attributesJson) {
+            return null;
+        }
+
+        $attributes = json_decode($attributesJson, true);
+        foreach ($attributes as &$attribute) {
+            $attribute['items'] = json_decode($attribute['items'], true);
+        }
+        return $attributes;
+    }
 }
+

@@ -10,8 +10,9 @@ class Product extends AbstractModel
 {
     public static function getAll()
     {
+        // Fetch all categories and products with their details
         $query = "
-        SELECT 
+       SELECT 
     p.id,
     p.name,
     p.in_stock,
@@ -39,6 +40,7 @@ class Product extends AbstractModel
     ) FROM prices pr LEFT JOIN currencies c ON pr.currency_label = c.label WHERE pr.product_id = p.id) AS prices
 FROM 
     products p;
+
           ";
         return static::queryAllProducts($query);
     }

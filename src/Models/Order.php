@@ -28,6 +28,10 @@ class Order
             ]);
             $orderId = $pdo->lastInsertId();
 
+            if (!$orderId) {
+                throw new Exception("Failed to retrieve the last inserted order ID.");
+            }
+
             // Insert order products
             $query = "INSERT INTO order_products (order_id, product_id, quantity, total_price, attributes)
                       VALUES (:order_id, :product_id, :quantity, :total_price, :attributes)";
@@ -46,6 +50,7 @@ class Order
             return $orderId;
         } catch (Exception $e) {
             $pdo->rollBack();
+            error_log("Error inserting order: " . $e->getMessage());
             throw new Exception("Error inserting order: " . $e->getMessage());
         }
     }
@@ -75,6 +80,7 @@ class Order
 
             return $order;
         } catch (Exception $e) {
+            error_log("Error fetching order: " . $e->getMessage());
             throw new Exception("Error fetching order: " . $e->getMessage());
         }
     }
@@ -86,37 +92,41 @@ class Order
         try {
             // Fetch all orders with products
             $query = "
-       SELECT 
-    o.id AS order_id,
-    o.customer_name,
-    o.customer_email,
-    o.customer_address,
-    o.status,
-    o.total_price,
-    (SELECT JSON_ARRAYAGG(
-        JSON_OBJECT(
-            'product_id', op.product_id,
-            'product_name', p.name,
-            'quantity', op.quantity,
-            'total_price', op.total_price,
-            'attributes', op.attributes
-        )
-    ) 
-    FROM order_products op 
-    JOIN products p ON op.product_id = p.id 
-    WHERE op.order_id = o.id) AS products
-FROM 
-    orders o;
-        ";
+                SELECT 
+                    o.id AS order_id,
+                    o.customer_name,
+                    o.customer_email,
+                    o.customer_address,
+                    o.status,
+                    o.total_price,
+                    (SELECT JSON_ARRAYAGG(
+                        JSON_OBJECT(
+                            'product_id', op.product_id,
+                            'product_name', p.name,
+                            'quantity', op.quantity,
+                            'total_price', op.total_price,
+                            'attributes', op.attributes
+                        )
+                    ) 
+                    FROM order_products op 
+                    JOIN products p ON op.product_id = p.id 
+                    WHERE op.order_id = o.id) AS products
+                FROM 
+                    orders o;
+            ";
             $stmt = $pdo->prepare($query);
             $stmt->execute();
             $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            // Decode JSON products field
+            // Decode JSON products field if it is not null
             foreach ($orders as &$order) {
-                $order['products'] = json_decode($order['products'], true);
+                if (!is_null($order['products'])) {
+                    $order['products'] = json_decode($order['products'], true);
+                } else {
+                    $order['products'] = [];
+                }
             }
-            var_dump($orders);
+
             return $orders;
         } catch (Exception $e) {
             error_log('Error fetching orders: ' . $e->getMessage());

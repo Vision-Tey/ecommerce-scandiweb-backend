@@ -2,6 +2,7 @@
 
 namespace App\Schema;
 
+use GraphQL\Type\Definition\NonNull;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 

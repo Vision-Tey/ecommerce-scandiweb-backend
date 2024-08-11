@@ -17,7 +17,7 @@ class OrderProductType extends ObjectType
                 'productName' => Type::string(),
                 'quantity' => Type::int(),
                 'price' => Type::string(),
-                'attributes' => Type::string() // If you have a more complex structure for attributes, consider creating a custom type
+                'attributes' => Type::string()
             ]
         ]);
     }
