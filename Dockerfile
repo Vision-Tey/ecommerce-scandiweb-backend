@@ -33,6 +33,8 @@ COPY custom-apache.conf /etc/apache2/sites-available/000-default.conf
 # Enable mod_rewrite
 RUN a2enmod rewrite
 
+# Set ServerName globally
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Expose port 80
 EXPOSE 80
