@@ -9,7 +9,7 @@ services:
     volumes:
       - .:/var/www/html
     ports:
-      - "8080:80"
+      - "8000:80"
     environment:
       # - MYSQL_HOST=db
       # - MYSQL_USER=root

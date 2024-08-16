@@ -34,10 +34,12 @@ COPY custom-apache.conf /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
 
 # Set ServerName globally
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+# RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Expose port 80
-EXPOSE 80
+# # Expose port 80
+# EXPOSE 80
 
-# Start the Apache server
-CMD ["apache2-foreground"]
+# # Start the Apache server
+# CMD ["apache2-foreground"]
+# Start server
+CMD ["php", "-S", "0.0.0.0:8000"]
