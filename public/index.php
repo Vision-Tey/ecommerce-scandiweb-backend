@@ -34,7 +34,7 @@ new Database($conf, $user, $pass);
 
 // Set up FastRoute dispatcher and define routes
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
-    $r->addRoute('POST', '/graphql', [App\Controller\GraphQLController::class, 'handle']);
+    $r->addRoute('POST', '/public/graphql', [App\Controller\GraphQLController::class, 'handle']);
 });
 
 // Dispatch the request to the appropriate route handler

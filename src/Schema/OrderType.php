@@ -18,6 +18,7 @@ class OrderType extends ObjectType
                 'customerAddress' => Type::nonNull(Type::string()),
                 'status' => Type::nonNull(Type::string()),
                 'totalPrice' => Type::nonNull(Type::float()),
+                'created_at' => Type::nonNull(Type::string()),
                 'products' => Type::listOf(new OrderProductType())
             ]
         ]);
