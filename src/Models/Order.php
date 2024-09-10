@@ -15,12 +15,9 @@ class Order
         try {
             $pdo->beginTransaction();
 
-            // Get the current timestamp in 'YYYY-MM-DD HH:MM:SS' format
-            $createdAt = date('Y-m-d H:i:s');
-
             // Insert the order
-            $query = "INSERT INTO orders (customer_name, customer_email, customer_address, status, total_price, created_at)
-                      VALUES (:customer_name, :customer_email, :customer_address, :status, :total_price, :created_at)";
+            $query = "INSERT INTO orders (customer_name, customer_email, customer_address, status, total_price)
+                      VALUES (:customer_name, :customer_email, :customer_address, :status, :total_price)";
             $stmt = $pdo->prepare($query);
             $stmt->execute([
                 ':customer_name' => $orderData['customer_name'],
@@ -28,7 +25,6 @@ class Order
                 ':customer_address' => $orderData['customer_address'],
                 ':status' => $orderData['status'],
                 ':total_price' => $orderData['total_price'],
-                ':created_at' => $createdAt
             ]);
             $orderId = $pdo->lastInsertId();
 
@@ -37,12 +33,11 @@ class Order
             }
 
             // Insert order products
-            $query = "INSERT INTO order_products (id, order_id, product_id, quantity, total_price, attributes)
-                      VALUES (:id, :order_id, :product_id, :quantity, :total_price, :attributes)";
+            $query = "INSERT INTO order_products (order_id, product_id, quantity, total_price, attributes)
+                      VALUES (:order_id, :product_id, :quantity, :total_price, :attributes)";
             $stmt = $pdo->prepare($query);
             foreach ($orderData['products'] as $product) {
                 $stmt->execute([
-                    ':id' => $orderId,
                     ':order_id' => $orderId,
                     ':product_id' => $product['product_id'],
                     ':quantity' => $product['quantity'],

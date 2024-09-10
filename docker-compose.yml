@@ -16,10 +16,10 @@ services:
       # - MYSQL_PASSWORD=secret
       # - MYSQL_DATABASE=your_database
 
-      - MYSQL_HOST=102.134.147.233
-      - MYSQL_USER=vnvpyauobgavclxa
-      - MYSQL_PASSWORD=secret1234
-      - MYSQL_DATABASE=gsrlqftebzstmsgwkksduajx
+      - MYSQL_HOST=wm63be5w8m7gs25a.cbetxkdyhwsb.us-east-1.rds.amazonaws.com
+      - MYSQL_USER=lylxpkd89i9fa75b
+      - MYSQL_PASSWORD=v6yphu5lfxddtqf2
+      - MYSQL_DATABASE=dgy0oetsdffpvqr6
 
   db:
     image: mysql:8.0
@@ -29,11 +29,11 @@ services:
       # MYSQL_ROOT_PASSWORD: secret
       # MYSQL_DATABASE: your_database
 
-      MYSQL_ROOT_PASSWORD: secret1234
-      MYSQL_DATABASE: gsrlqftebzstmsgwkksduajx
+      MYSQL_ROOT_PASSWORD: v6yphu5lfxddtqf2
+      MYSQL_DATABASE: dgy0oetsdffpvqr6
     ports:
-      - "32764:32764"
-      # - "3306:3306"
+      # - "32764:32764"
+      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
 

@@ -35,7 +35,6 @@ class MutationType extends ObjectType
                         'customer_address' => Type::nonNull(Type::string()),
                         'status' => Type::nonNull(Type::string()),
                         'total_price' => Type::nonNull(Type::float()),
-                        'created_at' => Type::nonNull(Type::string()),
                         'products' => Type::nonNull(Type::listOf(Type::nonNull($orderProductInput)))
                     ],
                     'resolve' => function ($root, $args) {

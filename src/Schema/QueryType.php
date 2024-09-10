@@ -105,15 +105,28 @@ class QueryType extends ObjectType
 
     private function decodeAttributes($attributesJson)
     {
-        if (!$attributesJson) {
+        // If attributes are null or empty, return null
+        if (empty($attributesJson) || $attributesJson === 'NULL') {
             return null;
         }
-
+    
+        // Decode the JSON string into an array
         $attributes = json_decode($attributesJson, true);
-        foreach ($attributes as &$attribute) {
-            $attribute['items'] = json_decode($attribute['items'], true);
+    
+        // Check if the JSON decoding was successful
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return null; // Handle invalid JSON case
         }
+    
+        // Iterate over each attribute and decode the 'items' field
+        foreach ($attributes as &$attribute) {
+            if (isset($attribute['items'])) {
+                $attribute['items'] = json_decode(json_encode($attribute['items']), true);
+            }
+        }
+    
         return $attributes;
     }
+    
 }
 

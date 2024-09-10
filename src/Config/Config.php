@@ -13,11 +13,11 @@ final class Config
         $dotenv->load();
 
         // Fetch environment variables with provided defaults
-        $host = getenv('MYSQL_HOST') ?: '102.134.147.233';
-        $dbname = getenv('MYSQL_DATABASE') ?: 'gsrlqftebzstmsgwkksduajx';
-        $user = getenv('MYSQL_USER') ?: 'vnvpyauobgavclxa';
-        $password = getenv('MYSQL_PASSWORD') ?: 'secret1234';
-        $port = getenv('PORT') ?: '32764';
+        $host = getenv('MYSQL_HOST') ?: 'wm63be5w8m7gs25a.cbetxkdyhwsb.us-east-1.rds.amazonaws.com';
+        $dbname = getenv('MYSQL_DATABASE') ?: 'dgy0oetsdffpvqr6';
+        $user = getenv('MYSQL_USER') ?: 'lylxpkd89i9fa75b';
+        $password = getenv('MYSQL_PASSWORD') ?: 'v6yphu5lfxddtqf2';
+        $port = getenv('PORT') ?: '3306';
 
         return [
             'db' => [
