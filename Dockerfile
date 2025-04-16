@@ -11,14 +11,11 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-# Make sure .env gets into the container
 COPY .env .env
 
-# Copy composer files and install dependencies
 COPY composer.json composer.lock ./
 RUN composer install
 
-# Copy the rest of the application
 COPY . .
 
 EXPOSE 8000
